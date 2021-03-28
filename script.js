@@ -6,19 +6,23 @@ window.addEventListener("load", function() {
    form.addEventListener("submit", function(event) {
       event.preventDefault()
       let pilotNameInput = document.querySelector("input[name=pilotName]");
+      pilotNameInput = pilotNameInput.value
       let copilotNameInput = document.querySelector("input[name=copilotName]");
-      let fuelLevelInput = Number(document.querySelector("input[name=fuelLevel]"));
-      let cargoMassInput = Number(document.querySelector("input[name=cargoMass]"))
+      copilotNameInput = copilotNameInput.value
+      let fuelLevelInput = document.querySelector("input[name=fuelLevel]");
+      fuelLevelInput = Number(fuelLevelInput.value)
+      let cargoMassInput = document.querySelector("input[name=cargoMass]")
+      cargoMassInput = Number(cargoMassInput.value)
 
       if (pilotNameInput.value === "" || copilotNameInput.value === "" || fuelLevelInput.value === "" || cargoMassInput.value === "") {
          alert("All fields are required!");
       }
 
-      if (!isNaN(fuelLevelInput)){
-         alert("Please enter a valid number")
+      if (isNaN(fuelLevelInput)){
+         alert("Please enter a valid number for Fuel Level")
       }
-      if (!isNaN(cargoMassInput)){
-         alert("Please enter a valid number")
+      if (isNaN(cargoMassInput)){
+         alert("Please enter a valid number for Cargo Mass")
       }
 
       let pilotStatus = document.getElementById("pilotStatus")
@@ -26,20 +30,23 @@ window.addEventListener("load", function() {
       let fuelStatus = document.getElementById("fuelStatus")
       let cargoStatus = document.getElementById("cargoStatus")
       let launchStatus = document.getElementById("launchStatus")
-
+      // let faulty = document.getElementById("faultyItems")
+   
       pilotStatus.innerHTML = `Pilot ${pilotNameInput} is ready for launch.`
       copilotStatus.innerHTML = `Copilot ${copilotNameInput} is ready for launch.`
       if (fuelLevelInput < 10000){
          fuelStatus.innerHTML = "Not enough fuel to launch!"
          launchStatus.style.color = "red"
          launchStatus.innerHTML = "Shuttle not ready for launch!"
+         document.getElementById("faultyItems").style.visibility = "visible"
       }
       if (cargoMassInput > 10000){
          cargoStatus.innerHTML = "There is too much mass to take off!"
          launchStatus.style.color = "red"
          launchStatus.innerHTML = "Shuttle not ready for launch!"
+         document.getElementById("faultyItems").style.visibility = "visible"
       }
-      if (fuelLevelInput >10000 && cargoMassInput < 10000){
+      if (fuelLevelInput >=10000 && cargoMassInput <= 10000){
          launchStatus.style.color = "green"
          launchStatus.innerHTML = "Shuttle is ready for launch"
       }
