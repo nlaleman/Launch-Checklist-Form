@@ -14,7 +14,7 @@ window.addEventListener("load", function() {
       let cargoMassInput = document.querySelector("input[name=cargoMass]")
       cargoMassInput = Number(cargoMassInput.value)
 
-      if (pilotNameInput.value === "" || copilotNameInput.value === "" || fuelLevelInput.value === "" || cargoMassInput.value === "") {
+      if (pilotNameInput === "" || copilotNameInput === "" || fuelLevelInput === "" || cargoMassInput === "") {
          alert("All fields are required!");
       }
 
@@ -30,7 +30,6 @@ window.addEventListener("load", function() {
       let fuelStatus = document.getElementById("fuelStatus")
       let cargoStatus = document.getElementById("cargoStatus")
       let launchStatus = document.getElementById("launchStatus")
-      // let faulty = document.getElementById("faultyItems")
    
       pilotStatus.innerHTML = `Pilot ${pilotNameInput} is ready for launch.`
       copilotStatus.innerHTML = `Copilot ${copilotNameInput} is ready for launch.`
@@ -50,11 +49,25 @@ window.addEventListener("load", function() {
          launchStatus.style.color = "green"
          launchStatus.innerHTML = "Shuttle is ready for launch"
       }
+  })
 
-      
+  fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response){
+     response.json().then(function(json){
+        const div = document.getElementById("missionTarget")
+        div.innerHTML = `
+         <h2>Mission Destination</h2>
+         <ol>
+            <li>Name: ${json[1].name}</li>
+            <li>Diameter: ${json[1].diameter}</li>
+            <li>Star: ${json[1].star}</li>
+            <li>Distance from Earth: ${json[1].distance}</li>
+            <li>Number of Moons: ${json[1].moons}</li>
+         </ol>
+         <img src="${json[1].image}">
+        `
+     })
+  })
 
-
-   })
 })
 
 /* This block of code shows how to format the HTML once you fetch some planetary JSON!
